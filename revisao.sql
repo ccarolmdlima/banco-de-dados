@@ -5,11 +5,40 @@ edição (ED), unidade de federação (UF) e ano da publicação (ANO).
 Ordenação: Decrescente pelo nome do autor e ascendente pelo ano de publicação.
 */
 
+SELECT 
+    A.NOME AS AUTOR, 
+    T.DESCRICAO AS TITULO, 
+    C.NOME AS CIDADE, 
+    P.EDICAO AS ED, 
+    C.UF, 
+    P.ANO
+FROM 
+    PUBLICACAO P
+    JOIN AUTOR A ON P.CD_AUT = A.CODIGO
+    JOIN TITULO T ON P.CD_TIT = T.CODIGO
+    JOIN CIDADE C ON P.CD_CID = C.CODIGO
+ORDER BY 
+    A.NOME DESC, 
+    P.ANO ASC;
+
 /*
 2) Fazer uma query para selecionar a quantidade de empréstimo sem devolução por usuário.
 Mostrar: Nome do usuário (USUARIO) e QDE_ESD.
 Ordenação: Decrescente pela quantidade de empréstimo sem devolução (QDE_ESD).
 */
+
+SELECT 
+    U.NOME AS USUARIO, 
+    COUNT(E.CODIGO) AS QDE_ESD
+FROM 
+    USUARIO U
+    JOIN EMPRESTIMO E ON U.CODIGO = E.CD_USR
+WHERE 
+    E.DT_DEVOLUCAO IS NULL
+GROUP BY 
+    U.NOME
+ORDER BY 
+    QDE_ESD DESC;
 
 /*
 3) Fazer uma query para selecionar os bibliotecários que não realizaram empréstimos na biblioteca.
@@ -17,11 +46,33 @@ Mostrar: O código do bibliotecário (CODIGO) e o nome do bibliotecário (BIBLIO
 Ordenação: Ascendente pelo código do bibliotecário.
 */
 
+SELECT 
+    B.CODIGO, 
+    B.NOME AS BIBLIOTECARIO
+FROM 
+    BIBLIOTECARIO B
+LEFT JOIN 
+    EMPRESTIMO E ON B.CODIGO = E.CD_BIB
+WHERE 
+    E.CODIGO IS NULL
+ORDER BY 
+    B.CODIGO ASC;
+
 /*
 4) Fazer uma query para selecionar os livros com situações disponível.
 Mostrar: O código e observações dos livros.
 Ordenação: Ascendente pelo código dos livros.
 */
+
+SELECT 
+    L.CODIGO, 
+    L.OBSERVACOES
+FROM 
+    LIVRO L
+WHERE 
+    L.SITUACAO = 'disponível'
+ORDER BY 
+    L.CODIGO ASC;
 
 /*
 5) Fazer uma query para selecionar os empréstimos sem devolução (sem data de devolução
@@ -30,6 +81,20 @@ Mostrar: Nome do usuário (USUARIO), nome do bibliotecário (BIBLIOTECARIO), có
 e a data de empréstimo (DATA_EMPRESTIMO).
 Ordenação: Crescente pelo nome do usuário.
 */
+
+SELECT 
+    U.NOME AS USUARIO, 
+    B.NOME AS BIBLIOTECARIO, 
+    E.CD_LIV AS LIVRO, 
+    E.DT_EMPRESTIMO AS DATA_EMPRESTIMO
+FROM 
+    EMPRESTIMO E
+    JOIN USUARIO U ON E.CD_USR = U.CODIGO
+    JOIN BIBLIOTECARIO B ON E.CD_BIB = B.CODIGO
+WHERE 
+    E.DT_DEVOLUCAO IS NULL
+ORDER BY 
+    U.NOME ASC;
 
 /*
 MER FÍSICO DO BANCO DE DADOS
