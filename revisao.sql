@@ -6,20 +6,22 @@ Ordenação: Decrescente pelo nome do autor e ascendente pelo ano de publicaçã
 */
 
 SELECT 
-    A.NOME AS AUTOR, 
-    T.DESCRICAO AS TITULO, 
-    C.NOME AS CIDADE, 
-    P.EDICAO AS ED, 
-    C.UF, 
+    A.NOME AS AUTOR,
+    T.DESCRICAO AS TITULO,
+    C.NOME AS CIDADE,
+    P.EDICAO AS ED,
+    C.UF,
     P.ANO
 FROM 
     PUBLICACAO P
-    JOIN AUTOR A ON P.CD_AUT = A.CODIGO
-    JOIN TITULO T ON P.CD_TIT = T.CODIGO
-    JOIN CIDADE C ON P.CD_CID = C.CODIGO
+JOIN 
+    AUTOR A ON P.CD_AUT = A.CODIGO
+JOIN 
+    TITULO T ON P.CD_TIT = T.CODIGO
+JOIN 
+    CIDADE C ON P.CD_CID = C.CODIGO
 ORDER BY 
-    A.NOME DESC, 
-    P.ANO ASC;
+    A.NOME ASC;
 
 /*
 2) Fazer uma query para selecionar a quantidade de empréstimo sem devolução por usuário.
