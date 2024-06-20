@@ -30,11 +30,12 @@ Ordenação: Decrescente pela quantidade de empréstimo sem devolução (QDE_ESD
 */
 
 SELECT 
-    U.NOME AS USUARIO, 
+    U.NOME AS USUARIO,
     COUNT(E.CODIGO) AS QDE_ESD
 FROM 
     USUARIO U
-    JOIN EMPRESTIMO E ON U.CODIGO = E.CD_USR
+JOIN 
+    EMPRESTIMO E ON U.CODIGO = E.CD_USR
 WHERE 
     E.DT_DEVOLUCAO IS NULL
 GROUP BY 
