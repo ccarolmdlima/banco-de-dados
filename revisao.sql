@@ -50,7 +50,7 @@ Ordenação: Ascendente pelo código do bibliotecário.
 */
 
 SELECT 
-    B.CODIGO, 
+    B.CODIGO,
     B.NOME AS BIBLIOTECARIO
 FROM 
     BIBLIOTECARIO B
